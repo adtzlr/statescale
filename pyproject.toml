@@ -56,6 +56,7 @@ docs = [
     "sphinx-gallery",
     "pypandoc",
 ]
+examples = ["felupe", "pyvista[jupyter]", "matplotlib", "meshio"]
 dev = [
     "pytest",
     "tox",
