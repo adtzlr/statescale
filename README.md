@@ -70,4 +70,3 @@ the repository.
 
 ## License
 See the `LICENSE` file.
-```
