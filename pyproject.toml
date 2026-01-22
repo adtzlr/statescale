@@ -58,6 +58,7 @@ docs = [
 ]
 dev = [
     "pytest",
+    "tox",
 ]
 
 [tool.setuptools.dynamic]
