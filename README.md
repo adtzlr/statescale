@@ -3,6 +3,7 @@ snapsy is a Python package for snapshot-based interpolation of high-dimensional
 simulation data along arbitrary parameter or signal paths. 
 
 [![codecov](https://codecov.io/gh/adtzlr/snapsy/graph/badge.svg?token=doCYWavVbp)](https://codecov.io/gh/adtzlr/snapsy)
+[![readthedocs](https://app.readthedocs.org/projects/snapsy/badge/?version=latest&style=flat)](https://snapsy.readthedocs.io/en/latest/)
 
 ## Overview
 `snapsy` provides a lightweight API to manage time-dependent point- and cell-data
