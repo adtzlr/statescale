@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
+
+[project]
+name = "snapsy"
+description = "Snapshot based interpolation of high-dimensional simulation data."
+readme = "README.md"
+authors = [
+  {name = "Andreas Dutzler", email = "a.dutzler@gmail.com"},
+]
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = [
+  "computational-mechanics",
+  "interpolation",
+  "surrogate-model",
+  "python", 
+  "scientific-computing",
+  "solid-mechanics-codes",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Utilities"
+]
+dynamic = ["version"]
+
+dependencies = [
+  "numpy",
+]
+
+[project.optional-dependencies]
+docs = [
+    "pydata-sphinx-theme",
+    "sphinx-autoapi",
+    "sphinx-inline-tabs",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "sphinx-gallery",
+    "pypandoc",
+]
+all = [
+    "matplotlib",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "snapsy.__about__.__version__"}
+
+[project.urls]
+Homepage = "https://snapsy.readthedocs.io/en/latest"
+Documentation = "https://snapsy.readthedocs.io/en/latest"
+Repository = "https://github.com/adtzlr/snapsy"
+Issues = "https://github.com/adtzlr/snapsy/issues"
+Changelog = "https://github.com/adtzlr/snapsy/blob/main/CHANGELOG.md"
