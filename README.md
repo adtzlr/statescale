@@ -19,7 +19,7 @@ Development install (from source):
 1. Clone the repository:
 
 ```
-git clone https://github.com/<owner>/snapsy.git
+git clone https://github.com/adtzlr/snapsy.git
 cd snapsy
 ```
 
