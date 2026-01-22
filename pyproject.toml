@@ -56,8 +56,8 @@ docs = [
     "sphinx-gallery",
     "pypandoc",
 ]
-all = [
-    "matplotlib",
+dev = [
+    "pytest",
 ]
 
 [tool.setuptools.dynamic]
