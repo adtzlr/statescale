@@ -105,17 +105,17 @@ class ModelResult:
             cell_data = self.cell_data
             field_data = self.field_data
 
-            if self.point_data is not None:
+            if on_point_data and self.point_data is not None:
                 point_data = {
                     k: func(v, *args, **kwargs) for k, v in self.point_data.items()
                 }
 
-            if self.cell_data is not None:
+            if on_cell_data and self.cell_data is not None:
                 cell_data = {
                     k: func(v, *args, **kwargs) for k, v in self.cell_data.items()
                 }
 
-            if self.field_data is not None:
+            if on_field_data and self.field_data is not None:
                 field_data = {
                     k: func(v, *args, **kwargs) for k, v in self.field_data.items()
                 }

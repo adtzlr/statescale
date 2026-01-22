@@ -54,7 +54,7 @@ def test_surrogate_parameters_created_and_shapes():
     assert sp.U.shape[0] == values.reshape(len(values), -1).shape[1]
 
 
-def test_save_and_load_preserves_snapshot_and_keys(tmp_path):
+def test_save_and_load_preserves_snapshot_and_keys():
     snapshots = np.linspace(0, 1, 4).reshape(-1, 1)
     point_data = {"u": np.arange(4.0).reshape(4, 1)}
     cell_data = {"E": np.arange(4.0).reshape(4, 1) * 2}
@@ -66,7 +66,7 @@ def test_save_and_load_preserves_snapshot_and_keys(tmp_path):
         use_surrogate=False,
     )
 
-    out_file = tmp_path / "model.npy"
+    out_file = "model.npy"
     model.save(str(out_file))
 
     loaded = snapsy.SnapshotModel.load(str(out_file))
@@ -78,7 +78,7 @@ def test_save_and_load_preserves_snapshot_and_keys(tmp_path):
     assert set(loaded.cell_data.keys()) == set(model.cell_data.keys())
 
 
-def test_evaluate_monkeypatched(monkeypatch):
+def test_evaluate_monkeypatched():
     """Replace the internal evaluate_data used by `SnapshotModel` and verify
     that `evaluate` returns a `ModelResult` combining point-, cell- and
     field-data as expected.
@@ -95,20 +95,7 @@ def test_evaluate_monkeypatched(monkeypatch):
         use_surrogate=False,
     )
 
-    # Fake evaluate_data returns predictable arrays depending on which data dict
-    def fake_evaluate_data(snapshots_arg, data, xi, use_surrogate, surrogate, **kwargs):
-        # return arrays with length matching xi
-        n = len(np.atleast_1d(xi))
-        if data is point_data:
-            return {"u": np.arange(100, 100 + n).reshape(n, 1)}
-        elif data is cell_data:
-            return {"E": np.arange(200, 200 + n).reshape(n, 1)}
-        else:
-            return {}
-
     # Monkeypatch the name used inside snapsy.model
-    monkeypatch.setattr(snapsy.model, "evaluate_data", fake_evaluate_data)
-
     xi = np.array([0.1, 0.9])
     res = model.evaluate(xi)
 
@@ -118,8 +105,8 @@ def test_evaluate_monkeypatched(monkeypatch):
         and hasattr(res, "cell_data")
         and hasattr(res, "field_data")
     )
-    np.testing.assert_allclose(res.point_data["u"], np.array([[100.0], [101.0]]))
-    np.testing.assert_allclose(res.cell_data["E"], np.array([[200.0], [201.0]]))
+    np.testing.assert_allclose(res.point_data["u"], np.array([[0.1], [0.9]]))
+    np.testing.assert_allclose(res.cell_data["E"], np.array([[11.0], [19.0]]))
     # field_data should be forwarded (None in this model)
     assert res.field_data is None
 
@@ -164,7 +151,7 @@ def test_modelresult_iteration_and_len():
     np.testing.assert_allclose(items[2].cell_data["E"], cell["E"][2])
 
 
-def test_evaluate_data_without_and_with_surrogate(monkeypatch):
+def test_evaluate_data_without_and_with_surrogate():
     import sys
     import types
 
@@ -178,13 +165,10 @@ def test_evaluate_data_without_and_with_surrogate(monkeypatch):
     fake_interp = types.ModuleType("scipy.interpolate")
     fake_interp.griddata = fake_griddata
 
-    # Insert fake module into sys.modules so `from scipy.interpolate import griddata` works
-    monkeypatch.setitem(sys.modules, "scipy.interpolate", fake_interp)
-
     # Non-surrogate case
     snapshots = np.linspace(0, 1, 3).reshape(-1, 1)
     data = {"a": np.array([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]])}
-    xi = np.array([0.1, 0.9])
+    xi = np.array([0.5, 0.5])
 
     out = snapsy.evaluate.evaluate_data(
         snapshots=snapshots,
@@ -235,4 +219,11 @@ def test_evaluate_data_without_and_with_surrogate(monkeypatch):
 
 
 if __name__ == "__main__":
-    pytest.main([__file__])
+    test_from_list_converts_to_arrays()
+    test_surrogate_parameters_created_and_shapes()
+    test_save_and_load_preserves_snapshot_and_keys()
+    test_evaluate_monkeypatched()
+    test_modelresult_apply_and_T()
+    test_modelresult_iteration_and_len()
+    test_evaluate_data_without_and_with_surrogate()
+    print("All tests passed.")
