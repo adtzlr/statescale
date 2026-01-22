@@ -39,7 +39,7 @@ model = snapsy.SnapshotModel(
     snapshots=snapshots,
     point_data=point_data,
     cell_data=cell_data,
-    use_surrogate=False,
+    # use_surrogate=True,  # use a surrogate model for interpolation
     # modes = (2, 10),  # choose min-max mode-range for surrogate model
     # threshold = 0.999,  # ratio of included singular values for surrogate model
 )
