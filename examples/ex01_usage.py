@@ -11,7 +11,7 @@ mesh = fem.Rectangle(n=6)
 region = fem.RegionQuad(mesh)
 field = fem.FieldContainer([fem.FieldPlaneStrain(region, dim=2)])
 
-boundaries = fem.dof.uniaxial(field, clamped=True)
+boundaries, loadcase = fem.dof.uniaxial(field, clamped=True)
 solid = fem.SolidBody(umat=fem.NeoHooke(mu=1, bulk=2), field=field)
 
 snapshots = fem.math.linsteps([0, 1], num=3)
