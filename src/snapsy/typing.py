@@ -49,8 +49,8 @@ class ModelResult:
             field_data=self.field_data,
         )
 
-    @wraps(np.mean)
     def mean(self, *args, **kwargs):
+        "Compute the arithmetic :func:`~numpy.mean` along the specified axis."
         return self.apply(np.mean)(*args, **kwargs)
 
     def apply(self, func, on_point_data=True, on_cell_data=True, on_field_data=False):
