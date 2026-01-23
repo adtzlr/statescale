@@ -156,7 +156,7 @@ class SnapshotModel:
     arrays. E.g., the mean over all cells (here, the first axis) of the cell-data is
     evaluated by:
 
-    ..  plot:
+    ..  plot::
         :context:
 
         res_5_mean = res_5.apply(
