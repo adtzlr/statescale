@@ -66,7 +66,7 @@ model = snapsy.SnapshotModel(
 
 signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
 
-# `res` is a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
+# a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
 res = model.evaluate(signal)
 ```
 
@@ -96,7 +96,7 @@ model = snapsy.SnapshotModel(
     field_data=field_data,
 )
 
-# `res` with `point_data`, `cell_data` and `field_data` for step 5.
+# `point_data`, `cell_data` and `field_data` for step 5 of the signal.
 res_5 = model.evaluate(signal)[5]
 ```
 
