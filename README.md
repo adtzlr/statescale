@@ -112,7 +112,7 @@ E.g., the mean over all cells (here, the first axis) of the cell-data is evaluat
 res_5_mean = res_5.apply(np.mean, on_point_data=False, on_cell_data=True)(axis=0)
 ```
 
-More details can be found in the [documentation](snapsy.readthedocs.io/).
+More details can be found in the [documentation](https://snapsy.readthedocs.io/).
 
 ## 🛠️ Tests
 The tests are located in `tests`. Run them locally with:
