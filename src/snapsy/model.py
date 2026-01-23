@@ -92,65 +92,65 @@ class SnapshotModel:
     signal are optional, 1d-arrays are also supported. The model result will be of shape
     ``(n_steps, ...)``.
 
-    1. Array-based input data
+    1.  Array-based input data
 
-    ..  plot::
-        :context:
+        ..  plot::
+            :context:
 
-        import numpy as np
-        import snapsy
+            import numpy as np
+            import snapsy
 
-        snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
-        point_data = {"displacement": np.random.rand(3, 9, 3)}  # 3 snapshots, 9 points, 3 dim
-        cell_data = {"strain": np.random.rand(3, 4, 6)}  # 3 snapshots, 4 cells, 6 dim
-        field_data = {"id": 1001}  # time-independent data
+            snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
+            point_data = {"displacement": np.random.rand(3, 9, 3)}  # 3 snapshots, 9 points, 3 dim
+            cell_data = {"strain": np.random.rand(3, 4, 6)}  # 3 snapshots, 4 cells, 6 dim
+            field_data = {"id": 1001}  # time-independent data
 
-        model = snapsy.SnapshotModel(
-            snapshots=snapshots,
-            point_data=point_data,
-            cell_data=cell_data,
-            field_data=field_data,
-            # use_surrogate=False,  # use a POD surrogate model
-            # modes=(2, 10),  # min- and max no. of modes for surrogate model
-        )
+            model = snapsy.SnapshotModel(
+                snapshots=snapshots,
+                point_data=point_data,
+                cell_data=cell_data,
+                field_data=field_data,
+                # use_surrogate=False,  # use a POD surrogate model
+                # modes=(2, 10),  # min- and max no. of modes for surrogate model
+            )
 
-        signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
+            signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
 
-        # a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
-        res = model.evaluate(signal)
+            # a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
+            res = model.evaluate(signal)
 
-    2. List-based input data
+    2.  List-based input data
 
-    If the data is list-based, the model can also import lists of dicts, with per-
-    snapshot list items. Model results also support indexing and a conversion to lists
-    of dicts.
+        If the data is list-based, the model can also import lists of dicts, with per-
+        snapshot list items. Model results also support indexing and a conversion to
+        lists of dicts.
 
-    ..  plot::
-        :context:
-        
-        import numpy as np
-        import snapsy
+        ..  plot::
+            :context:
+            
+            import numpy as np
+            import snapsy
 
-        point_data = [
-            {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
-            {"displacement": np.random.rand(6, 2)},  # 2. snapshot, 6 points, 2 dim
-            {"displacement": np.random.rand(6, 2)},  # 3. snapshot, 6 points, 2 dim
-        ]
-        cell_data = [
-            {"strain": np.random.rand(4, 2, 2)},  # 1. snapshot, 4 cells, (2, 2) dim
-            {"strain": np.random.rand(4, 2, 2)},  # 2. snapshot, 4 cells, (2, 2) dim
-            {"strain": np.random.rand(4, 2, 2)},  # 3. snapshot, 4 cells, (2, 2) dim
-        ]
+            point_data = [
+                {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
+                {"displacement": np.random.rand(6, 2)},  # 2. snapshot, 6 points, 2 dim
+                {"displacement": np.random.rand(6, 2)},  # 3. snapshot, 6 points, 2 dim
+            ]
+            cell_data = [
+                {"strain": np.random.rand(4, 2, 2)},  # 1. snapshot, 4 cells, (2, 2) dim
+                {"strain": np.random.rand(4, 2, 2)},  # 2. snapshot, 4 cells, (2, 2) dim
+                {"strain": np.random.rand(4, 2, 2)},  # 3. snapshot, 4 cells, (2, 2) dim
+            ]
 
-        model = snapsy.SnapshotModel(
-            snapshots=snapshots,
-            point_data=point_data,
-            cell_data=cell_data,
-            field_data=field_data,
-        )
+            model = snapsy.SnapshotModel(
+                snapshots=snapshots,
+                point_data=point_data,
+                cell_data=cell_data,
+                field_data=field_data,
+            )
 
-        # `point_data`, `cell_data` and `field_data` for step 5 of the signal.
-        res_5 = model.evaluate(signal)[5]
+            # `point_data`, `cell_data` and `field_data` for step 5 of the signal.
+            res_5 = model.evaluate(signal)[5]
 
     Any NumPy-function may be applied to the model result data on all time-dependent
     arrays. E.g., the mean over all cells (here, the first axis) of the cell-data is
