@@ -15,10 +15,10 @@ simulation data along arbitrary parameter or signal paths.
 and time-independent field-data across snapshots and to interpolate that data on new
 signals. The central class is `SnapshotModel`.
 
-- [x] snapshot-based interpolation
-- [x] apply signals on existing simulation data at snapshots
-- [x] efficient handling of high-dimensional data
-- [x] easy-to-use API
+- [x] Snapshot-based interpolation
+- [x] Apply signals on existing simulation data at snapshots
+- [x] Efficient handling of high-dimensional data
+- [x] Easy-to-use API
 
 <p align="center">
   <img width="371" height="256" alt="Image" src="https://github.com/user-attachments/assets/0ab590ab-4c91-4093-a36c-22662a604401" />
