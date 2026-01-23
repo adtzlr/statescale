@@ -101,10 +101,10 @@ res = model.evaluate(signal)[5]
 ```
 
 A NumPy-function may be applied to the model result data on all time-dependent arrays.
-E.g. the mean over all points and cells (here, the first axis) is evaluated by:
+E.g. the mean over all cells (here, the first axis) is evaluated by:
 
 ```python
-res_mean = res.apply(np.mean)(axis=0)
+res_mean = res.apply(np.mean, on_point_data=False, on_cell_data=True)(axis=0)
 ```
 
 ## Tests
