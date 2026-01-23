@@ -94,7 +94,7 @@ class SnapshotModel:
 
     1. Array-based input data
 
-    ..  plot:
+    ..  plot::
         :context:
 
         import numpy as np
@@ -125,7 +125,7 @@ class SnapshotModel:
     snapshot list items. Model results also support indexing and a conversion to lists
     of dicts.
 
-    ..  plot:
+    ..  plot::
         :context:
         
         import numpy as np
