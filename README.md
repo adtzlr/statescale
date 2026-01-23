@@ -33,7 +33,7 @@ cd snapsy
 2. Install in editable mode:
 
 ```
-pip install -e .
+pip install --editable .
 ```
 
 Dependencies: `numpy` and `scipy` (and `pytest` for running tests).
