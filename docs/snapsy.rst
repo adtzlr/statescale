@@ -3,8 +3,6 @@
 API Reference
 =============
 
-**Core**
-
 .. currentmodule:: snapsy
 
 .. autosummary::
