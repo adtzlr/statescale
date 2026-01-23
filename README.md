@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://felupe.readthedocs.io/en/latest/?badge=latest"><img src="https://github.com/user-attachments/assets/d1bc153c-b597-4961-839f-ed24de096747" height="160"></a>
-  <p align="center"><i>snapsy - Snapshot-based interpolation of high-dimensional simulation data along arbitrary parameter or signal paths.</i></p>
+  <p align="center"><i>snapsy - Snapshot-based interpolation of simulation data</i></p>
 </p>
 
 [![codecov](https://codecov.io/gh/adtzlr/snapsy/graph/badge.svg?token=doCYWavVbp)](https://codecov.io/gh/adtzlr/snapsy)
