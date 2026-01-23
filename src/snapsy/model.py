@@ -84,6 +84,87 @@ class SnapshotModel:
         * - ``...``
           - optional arbritrary trailing axes
 
+    Examples
+    --------
+    A minimal example. Snapshots must have shapes ``(n_snapshots, n_dim)``, point- and
+    cell-data ``(n_snapshots, ...)`` and the dimension of the signal must be compatible
+    with snapshots, i.e. ``(n_steps, n_dim)``. The second dimension of snapshots and the
+    signal are optional, 1d-arrays are also supported. The model result will be of shape
+    ``(n_steps, ...)``.
+
+    Array-based input data
+    ~~~~~~~~~~~~~~~~~~~~~~
+
+    ..  plot:
+        :context:
+
+        import numpy as np
+        import snapsy
+
+        snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
+        point_data = {"displacement": np.random.rand(3, 9, 3)}  # 3 snapshots, 9 points, 3 dim
+        cell_data = {"strain": np.random.rand(3, 4, 6)}  # 3 snapshots, 4 cells, 6 dim
+        field_data = {"id": 1001}  # time-independent data
+
+        model = snapsy.SnapshotModel(
+            snapshots=snapshots,
+            point_data=point_data,
+            cell_data=cell_data,
+            field_data=field_data,
+            # use_surrogate=False,  # use a POD surrogate model
+            # modes=(2, 10),  # min- and max no. of modes for surrogate model
+        )
+
+        signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
+
+        # `res` is a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
+        res = model.evaluate(signal)
+
+    List-based input data
+    ~~~~~~~~~~~~~~~~~~~~~
+
+    If the data is list-based, the model can also import lists of dicts, with per-
+    snapshot list items. Model results also support indexing and a conversion to lists
+    of dicts.
+
+    ..  plot:
+        :context:
+        
+        import numpy as np
+        import snapsy
+
+        point_data = [
+            {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
+            {"displacement": np.random.rand(6, 2)},  # 2. snapshot, 6 points, 2 dim
+            {"displacement": np.random.rand(6, 2)},  # 3. snapshot, 6 points, 2 dim
+        ]
+        cell_data = [
+            {"strain": np.random.rand(4, 2, 2)},  # 1. snapshot, 4 cells, (2, 2) dim
+            {"strain": np.random.rand(4, 2, 2)},  # 2. snapshot, 4 cells, (2, 2) dim
+            {"strain": np.random.rand(4, 2, 2)},  # 3. snapshot, 4 cells, (2, 2) dim
+        ]
+
+        model = snapsy.SnapshotModel(
+            snapshots=snapshots,
+            point_data=point_data,
+            cell_data=cell_data,
+            field_data=field_data,
+        )
+
+        # `res` with `point_data`, `cell_data` and `field_data` for step 5.
+        res_5 = model.evaluate(signal)[5]
+
+    Any NumPy-function may be applied to the model result data on all time-dependent
+    arrays. E.g., the mean over all cells (here, the first axis) of the cell-data is
+    evaluated by:
+
+    ..  plot:
+        :context:
+
+        res_5_mean = res_5.apply(
+            np.mean, on_point_data=False, on_cell_data=True
+        )(axis=0)
+
     References
     ----------
     ..  [1] L. Sirovich, "Turbulence and the dynamics of coherent structures. I.
