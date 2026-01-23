@@ -65,10 +65,10 @@ res = model.evaluate(signal)
 ```
 
 ## Tests
-The tests are located in `tests/test_model.py`. Run them locally with:
+The tests are located in `tests`. Run them locally with:
 
 ```
-pytest -q tests/test_model.py
+tox
 ```
 
 ## Contributing
