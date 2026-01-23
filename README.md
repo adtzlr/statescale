@@ -39,16 +39,19 @@ pip install --editable .
 Dependencies: `numpy` and `scipy` (and `pytest` for running tests).
 
 ## Quickstart
-A minimal example:
+A minimal example. Snapshots must have shapes `(n_snapshots, n_dim)`, point- and cell-
+data `(n_snapshots, ...)` and the dimension of the signal must be compatible with
+snapshots, i.e. `(n_steps, n_dim)`. The second dimension of snapshots and the signal
+are optional, 1d-arrays are also supported.
 
 ### Array-based input data
 ```python
 import numpy as np
 import snapsy
 
-snapshots = np.linspace(0, 1, num=5).reshape(-1, 1)  # 5 snapshots, 1 parameter
-point_data = {"displacement": np.random.rand(5, 9, 3)}  # 5 snapshots, 9 points, 3 dim
-cell_data = {"strain": np.random.rand(5, 4, 6)}  # 5 snapshots, 4 cells, 6 dim
+snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
+point_data = {"displacement": np.random.rand(3, 9, 3)}  # 3 snapshots, 9 points, 3 dim
+cell_data = {"strain": np.random.rand(3, 4, 6)}  # 3 snapshots, 4 cells, 6 dim
 field_data = {"id": 1001}  # time-independent data
 
 model = snapsy.SnapshotModel(
@@ -67,14 +70,13 @@ res = model.evaluate(signal)
 ```
 
 ### List-based input data
-If your data is list-based, the model can also import lists of dicts, with per-snapshot
+If the data is list-based, the model can also import lists of dicts, with per-snapshot
 list items. Model results also support indexing and a conversion to lists of dicts.
 
 ```python
 import numpy as np
 import snapsy
 
-snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
 point_data = [
     {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
     {"displacement": np.random.rand(6, 2)},  # 2. snapshot, 6 points, 2 dim
