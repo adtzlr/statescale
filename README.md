@@ -17,10 +17,10 @@ signals. The central class is `SnapshotModel`.
 
 **Highlights**
 
-- [x] Snapshot-based interpolation
-- [x] Apply signals on existing simulation data at snapshots
-- [x] Efficient handling of high-dimensional data
-- [x] Easy-to-use API
+- ✅ Snapshot-based interpolation
+- ✅ Apply signals on existing simulation data at snapshots
+- ✅ Efficient handling of high-dimensional data
+- ✅ Easy-to-use API
 
 <p align="center">
   <img width="371" height="256" alt="Image" src="https://github.com/user-attachments/assets/0ab590ab-4c91-4093-a36c-22662a604401" />
