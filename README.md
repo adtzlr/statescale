@@ -10,7 +10,7 @@ snapsy is a Python package for snapshot-based interpolation of high-dimensional
 simulation data along arbitrary parameter or signal paths. 
 
 
-## Overview
+## ✨ Overview
 `snapsy` provides a lightweight API to manage time-dependent point- and cell-data
 and time-independent field-data across snapshots and to interpolate that data on new
 signals. The central class is `SnapshotModel`.
@@ -19,7 +19,7 @@ signals. The central class is `SnapshotModel`.
   <img width="371" height="256" alt="Image" src="https://github.com/user-attachments/assets/0ab590ab-4c91-4093-a36c-22662a604401" />
 </p>
 
-## Installation
+## 📦 Installation
 Install from PyPI:
 
 ```
@@ -43,7 +43,7 @@ pip install --editable .
 
 Dependencies: `numpy` and `scipy` (and `pytest` for running tests).
 
-## Quickstart
+## 🚀 Quickstart
 A minimal example. Snapshots must have shapes `(n_snapshots, n_dim)`, point- and cell-
 data `(n_snapshots, ...)` and the dimension of the signal must be compatible with
 snapshots, i.e. `(n_steps, n_dim)`. The second dimension of snapshots and the signal
@@ -112,17 +112,20 @@ E.g., the mean over all cells (here, the first axis) of the cell-data is evaluat
 res_5_mean = res_5.apply(np.mean, on_point_data=False, on_cell_data=True)(axis=0)
 ```
 
-## Tests
+## 🛠️ Tests
 The tests are located in `tests`. Run them locally with:
 
 ```
 tox
 ```
 
-## Contributing
+## ➕ Contributing
 Bug reports and pull requests are welcome. Please open an issue or PR in
 the repository. The package is in early development, expect breaking API changes until
 version 1.0.0.
 
-## License
+## 📄 Changelog
+All notable changes to this project will be documented in [this file](CHANGELOG.md). The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 🔓 License
 See the `LICENSE` file.
