@@ -7,7 +7,7 @@ profile = "black"
 
 [project]
 name = "statescale"
-description = "Snapshot based interpolation of high-dimensional simulation data."
+description = "snapshot-driven state upscaling"
 readme = "README.md"
 authors = [
   {name = "Andreas Dutzler", email = "a.dutzler@gmail.com"},
