@@ -36,7 +36,7 @@ class GriddataKernel:
         snapshots,
         values,
         xi,
-        interp,
+        upscale,
         kernel_data=None,
         indices=None,
         axis=None,
@@ -48,4 +48,4 @@ class GriddataKernel:
         if indices is not None:
             values_taken = values_taken.take(indices=indices, axis=axis, **kwargs)
 
-        return interp(snapshots, values_taken, xi)
+        return upscale(snapshots, values_taken, xi)
