@@ -6,6 +6,6 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using these metadata."
 title: "statescale: snapshot-driven state upscaling"
 type: software
-doi: 10.5281/zenodo.18377265
+doi: 10.5281/zenodo.18377264
 url: https://github.com/adtzlr/statescale
 license: GPL-3.0
