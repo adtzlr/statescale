@@ -26,7 +26,7 @@ def test_snapshot_model():
     signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
 
     # a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
-    res = model.evaluate(signal)
+    res = model.evaluate(signal, indices=[0, 1, 2], axis=1)
 
 
 def test_snapshot_model_list():
@@ -55,9 +55,17 @@ def test_snapshot_model_list():
     signal = np.linspace(0, 1, num=20)  # 20 items, 1 parameter
 
     # `point_data`, `cell_data` and `field_data` for step 5 of the signal.
+    res = model.evaluate(signal, method="rbf", indices=[0, 1, 2], axis=1)
+    assert res.cell_data["strain"].shape == (20, 3, 2, 2)
+
+    res_5 = res[5]
+    assert res_5.point_data["displacement"].shape == (3, 2)
+
     res_5 = model.evaluate(signal, method="rbf")[5]
+    assert res_5.point_data["displacement"].shape == (6, 2)
 
     res_5_mean = res_5.apply(np.mean, on_point_data=False, on_cell_data=True)(axis=0)
+    assert res_5.cell_data["strain"].shape == (4, 2, 2)
 
 
 if __name__ == "__main__":
