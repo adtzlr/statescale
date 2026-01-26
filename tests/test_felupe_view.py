@@ -1,5 +1,6 @@
 import statescale
 import felupe as fem
+import numpy as np
 import pytest
 
 
@@ -29,11 +30,8 @@ def test_felupe_view():
     job = fem.Job(steps=[step], callback=record)
     job.evaluate()
 
-    # %%
     # Then, use the lists of point- and cell-data at the snapshots to create a
     # :class:`~statescale.SnapshotModel`.
-    import statescale
-
     model = statescale.SnapshotModel(
         snapshots=snapshots,
         point_data=point_data,
@@ -43,7 +41,6 @@ def test_felupe_view():
         threshold=0.999,  # ratio of included singular values for surrogate model
     )
 
-    # %%
     # A signal will be used to interpolate (evaluate) the point and cell data. The result
     # can be converted to a list and supports iteration.
     signal = fem.math.linsteps([0, 1], num=500)
@@ -51,15 +48,16 @@ def test_felupe_view():
     out = model.evaluate(signal)
     data = out[-5]
 
-    # %%
     # The results are used to plot the deformed FEM model along with a chosen cell-data.
     # Basic math, like transpose, can be applied to the model result. Any custom math-
     # function can also be applied on the arrays of the dicts by
     # :meth:`~statescale.ModelResult.apply`.
-    import numpy as np
-
     data = data.apply(np.mean, on_point_data=False)(axis=-2)
     data = data.apply(np.transpose, on_point_data=False)()
 
     view = data.as_view(field=field, inplace=True, update="u")
     view.mesh  # PyVista UnstructuredGrid
+
+
+if __name__ == "__main__":
+    test_felupe_view()
