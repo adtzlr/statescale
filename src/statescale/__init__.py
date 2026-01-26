@@ -1,6 +1,6 @@
-from . import evaluate, surrogate, models
-from .snapshot import SnapshotModel
+from . import evaluate, models, surrogate
 from .models import ModelResult
+from .snapshot import SnapshotModel
 
 __all__ = [
     "SnapshotModel",
