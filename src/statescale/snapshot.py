@@ -1,8 +1,8 @@
 import numpy as np
 
 from .evaluate import evaluate_data
-from .surrogate import fit_surrogate_parameters
 from .models import ModelResult
+from .surrogate import fit_surrogate_parameters
 
 
 class SnapshotModel:
@@ -127,7 +127,7 @@ class SnapshotModel:
 
         ..  plot::
             :context:
-            
+
             import numpy as np
             import statescale
 
