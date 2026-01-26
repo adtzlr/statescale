@@ -98,14 +98,14 @@ class SnapshotModel:
             :context:
 
             import numpy as np
-            import snapsy
+            import statescale
 
             snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
             point_data = {"displacement": np.random.rand(3, 9, 3)}  # 3 snapshots, 9 points, 3 dim
             cell_data = {"strain": np.random.rand(3, 4, 6)}  # 3 snapshots, 4 cells, 6 dim
             field_data = {"id": 1001}  # time-independent data
 
-            model = snapsy.SnapshotModel(
+            model = statescale.SnapshotModel(
                 snapshots=snapshots,
                 point_data=point_data,
                 cell_data=cell_data,
@@ -129,7 +129,7 @@ class SnapshotModel:
             :context:
             
             import numpy as np
-            import snapsy
+            import statescale
 
             point_data = [
                 {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
@@ -142,7 +142,7 @@ class SnapshotModel:
                 {"strain": np.random.rand(4, 2, 2)},  # 3. snapshot, 4 cells, (2, 2) dim
             ]
 
-            model = snapsy.SnapshotModel(
+            model = statescale.SnapshotModel(
                 snapshots=snapshots,
                 point_data=point_data,
                 cell_data=cell_data,
@@ -322,7 +322,7 @@ class SnapshotModel:
 
         Returns
         -------
-        snapsy.ModelResult
+        statescale.ModelResult
             The model result with attributes for time-dependent (empty) ``point_data``,
             ``cell_data`` and time-independent ``field_data``.
         """

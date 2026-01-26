@@ -1,25 +1,24 @@
 <p align="center">
   <a href="https://felupe.readthedocs.io/en/latest/?badge=latest"><img src="https://github.com/user-attachments/assets/d1bc153c-b597-4961-839f-ed24de096747" height="160"></a>
-  <p align="center"><i>snapsy - Snapshot-based interpolation of simulation data</i></p>
+  <p align="center"><i>statescale - Snapshot-driven state upscaling</i></p>
 </p>
 
-[![codecov](https://codecov.io/gh/adtzlr/snapsy/graph/badge.svg?token=doCYWavVbp)](https://codecov.io/gh/adtzlr/snapsy)
-[![readthedocs](https://app.readthedocs.org/projects/snapsy/badge/?version=latest&style=flat)](https://snapsy.readthedocs.io/en/latest/)
+[![codecov](https://codecov.io/gh/adtzlr/statescale/graph/badge.svg?token=doCYWavVbp)](https://codecov.io/gh/adtzlr/statescale)
+[![readthedocs](https://app.readthedocs.org/projects/statescale/badge/?version=latest&style=flat)](https://statescale.readthedocs.io/en/latest/)
 
-snapsy is a Python package for snapshot-based interpolation of high-dimensional
-simulation data along arbitrary parameter or signal paths. 
-
+`statescale` is a Python package for **snapshot-driven upscaling of high-dimensional
+simulation states** along arbitrary parameter or signal paths.
 
 ## ✨ Overview
-`snapsy` provides a lightweight API to manage time-dependent point- and cell-data
+`statescale` provides a lightweight API to manage time-dependent point- and cell-data
 and time-independent field-data across snapshots and to interpolate that data on new
 signals. The central class is
-[`SnapshotModel`](https://snapsy.readthedocs.io/en/latest/snapsy.html#snapsy.SnapshotModel).
+[`SnapshotModel`](https://statescale.readthedocs.io/en/latest/statescale.html#statescale.SnapshotModel).
 
 **Highlights**
 
-- ✅ Snapshot-based interpolation
-- ✅ Apply signals on existing simulation data at snapshots
+- ✅ Snapshot-driven state upscaling
+- ✅ Upscale simulation data to continuous signals from sparse snapshots
 - ✅ Efficient handling of high-dimensional data
 - ✅ Easy-to-use API
 
@@ -31,7 +30,7 @@ signals. The central class is
 Install from PyPI:
 
 ```
-pip install snapsy
+pip install statescale
 ```
 
 Development install (from source):
@@ -39,8 +38,8 @@ Development install (from source):
 1. Clone the repository:
 
 ```
-git clone https://github.com/adtzlr/snapsy.git
-cd snapsy
+git clone https://github.com/adtzlr/statescale.git
+cd statescale
 ```
 
 2. Install in editable mode:
@@ -61,14 +60,14 @@ are optional, 1d-arrays are also supported. The model result will be of shape
 ### Array-based input data
 ```python
 import numpy as np
-import snapsy
+import statescale
 
 snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
 point_data = {"displacement": np.random.rand(3, 9, 3)}  # 3 snapshots, 9 points, 3 dim
 cell_data = {"strain": np.random.rand(3, 4, 6)}  # 3 snapshots, 4 cells, 6 dim
 field_data = {"id": 1001}  # time-independent data
 
-model = snapsy.SnapshotModel(
+model = statescale.SnapshotModel(
     snapshots=snapshots,
     point_data=point_data,
     cell_data=cell_data,
@@ -89,7 +88,7 @@ list items. Model results also support indexing and a conversion to lists of dic
 
 ```python
 import numpy as np
-import snapsy
+import statescale
 
 point_data = [
     {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
@@ -102,7 +101,7 @@ cell_data = [
     {"strain": np.random.rand(4, 2, 2)},  # 3. snapshot, 4 cells, (2, 2) dim
 ]
 
-model = snapsy.SnapshotModel(
+model = statescale.SnapshotModel(
     snapshots=snapshots,
     point_data=point_data,
     cell_data=cell_data,
@@ -120,7 +119,7 @@ E.g., the mean over all cells (here, the first axis) of the cell-data is evaluat
 res_5_mean = res_5.apply(np.mean, on_point_data=False, on_cell_data=True)(axis=0)
 ```
 
-More details can be found in the [documentation](https://snapsy.readthedocs.io/).
+More details can be found in the [documentation](https://statescale.readthedocs.io/).
 
 ## 🛠️ Tests
 The tests are located in `tests`. Run them locally with:
@@ -135,7 +134,9 @@ the repository. The package is in early development, expect breaking API changes
 version 1.0.0.
 
 ## 📄 Changelog
-All notable changes to this project will be documented in [this file](CHANGELOG.md). The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to this project will be documented in [this file](CHANGELOG.md).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and
+this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 🔓 License
-See the `LICENSE` file.
+See the [`LICENSE`](LICENSE) file.

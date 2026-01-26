@@ -1,15 +1,15 @@
 Documentation
 =============
 
-snapsy is a Python package for snapshot-based interpolation of high-dimensional
-simulation data along arbitrary parameter or signal paths. 
+**statescale** is a Python package for **snapshot-driven upscaling of high-dimensional
+simulation states** along arbitrary parameter or signal paths.
 
 .. admonition:: Highlights
 
-   - snapshot-based interpolation
-   - apply signals on existing simulation data at snapshots
-   - efficient handling of high-dimensional data
-   - easy-to-use API
+   - ✅ Snapshot-driven state upscaling
+   - ✅ Upscale simulation data to continuous signals from sparse snapshots
+   - ✅ Efficient handling of high-dimensional data
+   - ✅ Easy-to-use API
 
 
 .. toctree::
@@ -17,12 +17,12 @@ simulation data along arbitrary parameter or signal paths.
    :caption: Contents:
    
    examples/index
-   snapsy
+   api
 
 License
 -------
 
-snapsy (C) 2026 Andreas Dutzler, Graz (Austria).
+statescale (C) 2026 Andreas Dutzler, Austria.
 
 Indices and tables
 ==================

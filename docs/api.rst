@@ -3,7 +3,7 @@
 API Reference
 =============
 
-.. currentmodule:: snapsy
+.. currentmodule:: statescale
 
 .. autosummary::
 
@@ -13,12 +13,12 @@ API Reference
 
 **Detailed API Reference**
 
-.. autoclass:: snapsy.SnapshotModel
+.. autoclass:: statescale.SnapshotModel
    :members:
    :undoc-members:
    :inherited-members:
 
-.. autoclass:: snapsy.ModelResult
+.. autoclass:: statescale.ModelResult
    :members:
    :undoc-members:
    :inherited-members:
