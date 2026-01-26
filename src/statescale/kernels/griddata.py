@@ -12,7 +12,7 @@ class GriddataKernelData:
 
 
 class GriddataKernel:
-    """The griddata kernel.
+    """A griddata kernel.
     
     Parameters
     ----------
