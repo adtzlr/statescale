@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://mit-license.org/)
 [![codecov](https://codecov.io/gh/adtzlr/statescale/graph/badge.svg?token=doCYWavVbp)](https://codecov.io/gh/adtzlr/statescale)
 [![readthedocs](https://app.readthedocs.org/projects/statescale/badge/?version=latest&style=flat)](https://statescale.readthedocs.io/en/latest/)
-[![DOI](https://zenodo.org/badge/18377264.svg)](https://zenodo.org/badge/latestdoi/18377264)
+[![DOI](https://zenodo.org/badge/1139657723.svg)](https://doi.org/10.5281/zenodo.18377264)
 ![Codestyle black](https://img.shields.io/badge/code%20style-black-black)
 
 `statescale` is a Python package for **snapshot-driven upscaling of high-dimensional
