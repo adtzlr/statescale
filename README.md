@@ -3,6 +3,8 @@
   <p align="center"><i>statescale - Snapshot-driven state upscaling</i></p>
 </p>
 
+[![PyPI version shields.io](https://img.shields.io/pypi/v/statescale.svg)](https://pypi.python.org/pypi/statescale/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://mit-license.org/)
 [![codecov](https://codecov.io/gh/adtzlr/statescale/graph/badge.svg?token=doCYWavVbp)](https://codecov.io/gh/adtzlr/statescale)
 [![readthedocs](https://app.readthedocs.org/projects/statescale/badge/?version=latest&style=flat)](https://statescale.readthedocs.io/en/latest/)
 [![DOI](https://zenodo.org/badge/18377264.svg)](https://zenodo.org/badge/latestdoi/18377264)
