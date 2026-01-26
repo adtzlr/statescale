@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 profile = "black"
 
 [project]
-name = "snapsy"
+name = "statescale"
 description = "Snapshot based interpolation of high-dimensional simulation data."
 readme = "README.md"
 authors = [
@@ -63,11 +63,11 @@ dev = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "snapsy.__about__.__version__"}
+version = {attr = "statescale.__about__.__version__"}
 
 [project.urls]
-Homepage = "https://snapsy.readthedocs.io/en/latest"
-Documentation = "https://snapsy.readthedocs.io/en/latest"
-Repository = "https://github.com/adtzlr/snapsy"
-Issues = "https://github.com/adtzlr/snapsy/issues"
-Changelog = "https://github.com/adtzlr/snapsy/blob/main/CHANGELOG.md"
+Homepage = "https://statescale.readthedocs.io/en/latest"
+Documentation = "https://statescale.readthedocs.io/en/latest"
+Repository = "https://github.com/adtzlr/statescale"
+Issues = "https://github.com/adtzlr/statescale/issues"
+Changelog = "https://github.com/adtzlr/statescale/blob/main/CHANGELOG.md"

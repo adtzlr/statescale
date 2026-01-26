@@ -49,6 +49,38 @@ class ModelResult:
             field_data=self.field_data,
         )
 
+    def as_mesh(self, points=None, cells=None, cell_type=None, mesh=None):
+        """Return a PyVista unstructured grid mesh with the model result data.
+
+        Parameters
+        ----------
+        points : np.ndarray, optional
+            The points of the mesh. Required if no mesh is provided. Default is None.
+        cells : np.ndarray, optional
+            The cells of the mesh. Required if no mesh is provided. Default is None.
+        cell_type : str, optional
+            The cell type of the mesh. Required if no mesh is provided. Default is None.
+        mesh : felupe.Mesh or None, optional
+            An existing mesh to attach the model result data to. Default is None.
+
+        Returns
+        -------
+        mesh_with_data : pyvista.UnstructuredGrid
+            The mesh with the model result data attached.
+
+        """
+        import felupe
+
+        if mesh is None:
+            mesh = felupe.Mesh(
+                points=points,
+                cells=cells,
+                cell_type=cell_type,
+            )
+
+        view = mesh.view(point_data=self.point_data, cell_data=self.cell_data)
+        return view.mesh
+
     def mean(self, *args, **kwargs):
         "Compute the arithmetic :func:`~numpy.mean` along the specified axis."
         return self.apply(np.mean)(*args, **kwargs)
@@ -89,9 +121,9 @@ class ModelResult:
         ..  code-block::
 
             >>> import numpy as np
-            >>> import snapsy
+            >>> import statescale
             >>>
-            >>> res = snapsy.Modelresult(point_data={"u": np.random.rand(25, 100, 8, 3)})
+            >>> res = statescale.Modelresult(point_data={"u": np.random.rand(25, 100, 8, 3)})
             >>> out = res.apply(np.mean)(axis=-2)
             >>>
             >>> out.point_data["u"].shape

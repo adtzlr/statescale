@@ -11,7 +11,7 @@ mesh = fem.Rectangle(n=6)
 region = fem.RegionQuad(mesh)
 field = fem.FieldContainer([fem.FieldPlaneStrain(region, dim=2)])
 
-boundaries, loadcase = fem.dof.uniaxial(field, clamped=True)
+boundaries = fem.dof.uniaxial(field, clamped=True)
 solid = fem.SolidBody(umat=fem.NeoHooke(mu=1, bulk=2), field=field)
 
 snapshots = fem.math.linsteps([0, 1], num=3)
@@ -32,10 +32,10 @@ job.evaluate()
 
 # %%
 # Then, use the lists of point- and cell-data at the snapshots to create a
-# :class:`~snapsy.SnapshotModel`.
-import snapsy
+# :class:`~statescale.SnapshotModel`.
+import statescale
 
-model = snapsy.SnapshotModel(
+model = statescale.SnapshotModel(
     snapshots=snapshots,
     point_data=point_data,
     cell_data=cell_data,
@@ -56,7 +56,7 @@ data = out[-5]
 # The results are used to plot the deformed FEM model along with a chosen cell-data.
 # Basic math, like transpose, can be applied to the model result. Any custom math-
 # function can also be applied on the arrays of the dicts by
-# :meth:`~snapsy.ModelResult.apply`.
+# :meth:`~statescale.ModelResult.apply`.
 import numpy as np
 
 field[0].values[:] = data.point_data["u"]
@@ -65,3 +65,7 @@ view = field.view(
     cell_data=data.apply(np.mean, on_point_data=False)(axis=-2).T.cell_data,
 )
 view.plot("E", component=0).show()
+
+data = data.apply(np.mean, on_point_data=False)(axis=-2)
+data = data.apply(np.transpose, on_point_data=False)()
+mesh = data.as_mesh(mesh=mesh)

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-import snapsy
+import statescale
 
 
 def test_from_list_converts_to_arrays():
@@ -10,7 +10,7 @@ def test_from_list_converts_to_arrays():
         {"a": np.array([4.0, 5.0]), "b": np.array([6.0])},
     ]
 
-    converted = snapsy.SnapshotModel.from_list(data_list)
+    converted = statescale.SnapshotModel.from_list(data_list)
 
     assert isinstance(converted, dict)
     assert "a" in converted and "b" in converted
@@ -26,7 +26,7 @@ def test_surrogate_parameters_created_and_shapes():
     point_data = {"u": values}
     cell_data = {"E": values * 2}
 
-    model = snapsy.SnapshotModel(
+    model = statescale.SnapshotModel(
         snapshots=snapshots,
         point_data=point_data,
         cell_data=cell_data,
@@ -59,7 +59,7 @@ def test_save_and_load_preserves_snapshot_and_keys():
     point_data = {"u": np.arange(4.0).reshape(4, 1)}
     cell_data = {"E": np.arange(4.0).reshape(4, 1) * 2}
 
-    model = snapsy.SnapshotModel(
+    model = statescale.SnapshotModel(
         snapshots=snapshots,
         point_data=point_data,
         cell_data=cell_data,
@@ -69,10 +69,10 @@ def test_save_and_load_preserves_snapshot_and_keys():
     out_file = "model.npy"
     model.save(str(out_file))
 
-    loaded = snapsy.SnapshotModel.load(str(out_file))
+    loaded = statescale.SnapshotModel.load(str(out_file))
 
     # loaded should be a SnapshotModel instance with same snapshots and keys
-    assert isinstance(loaded, snapsy.SnapshotModel)
+    assert isinstance(loaded, statescale.SnapshotModel)
     np.testing.assert_allclose(loaded.snapshots, model.snapshots)
     assert set(loaded.point_data.keys()) == set(model.point_data.keys())
     assert set(loaded.cell_data.keys()) == set(model.cell_data.keys())
@@ -88,14 +88,14 @@ def test_evaluate_monkeypatched():
     point_data = {"u": np.array([[0.0], [1.0]])}
     cell_data = {"E": np.array([[10.0], [20.0]])}
 
-    model = snapsy.SnapshotModel(
+    model = statescale.SnapshotModel(
         snapshots=snapshots,
         point_data=point_data,
         cell_data=cell_data,
         use_surrogate=False,
     )
 
-    # Monkeypatch the name used inside snapsy.model
+    # Monkeypatch the name used inside statescale.model
     xi = np.array([0.1, 0.9])
     res = model.evaluate(xi)
 
@@ -117,7 +117,7 @@ def test_modelresult_apply_and_T():
     cell = {"E": np.arange(6).reshape(3, 2)}
     field = {"const": np.array([10.0])}
 
-    mr = snapsy.ModelResult(point_data=point, cell_data=cell, field_data=field)
+    mr = statescale.ModelResult(point_data=point, cell_data=cell, field_data=field)
 
     # apply mean over axis=1 should act on both point and cell data
     out = mr.apply(np.mean)(axis=1)
@@ -139,7 +139,7 @@ def test_modelresult_iteration_and_len():
     point = {"u": np.array([[1.0], [2.0], [3.0]])}
     cell = {"E": np.array([[10.0], [20.0], [30.0]])}
 
-    mr = snapsy.ModelResult(point_data=point, cell_data=cell)
+    mr = statescale.ModelResult(point_data=point, cell_data=cell)
 
     # len should reflect number of snapshots
     assert len(mr) == 3
@@ -170,7 +170,7 @@ def test_evaluate_data_without_and_with_surrogate():
     data = {"a": np.array([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]])}
     xi = np.array([0.5, 0.5])
 
-    out = snapsy.evaluate.evaluate_data(
+    out = statescale.evaluate.evaluate_data(
         snapshots=snapshots,
         data=data,
         xi=xi,
@@ -202,7 +202,7 @@ def test_evaluate_data_without_and_with_surrogate():
 
     surrogate = {"u": SP(means=means, U=U, alpha=alpha, modes=2)}
 
-    out2 = snapsy.evaluate.evaluate_data(
+    out2 = statescale.evaluate.evaluate_data(
         snapshots=snapshots,
         data=data2,
         xi=xi,

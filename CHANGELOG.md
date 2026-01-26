@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+### Changed
+- Change name to `statescale` (was `snapsy`).
+
 ## [0.1.1] - 2026-01-23
 
 ### Fixed

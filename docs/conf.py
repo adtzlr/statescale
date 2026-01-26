@@ -38,7 +38,7 @@ os.environ["FELUPE_VERBOSE"] = "false"
 
 # -- Project information -----------------------------------------------------
 
-project = "snapsy"
+project = "statescale"
 year = datetime.date.today().year
 copyright = f"2026-{year}, Andreas Dutzler"
 author = "Andreas Dutzler"
@@ -113,7 +113,7 @@ pyvista_plot_include_source = True
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-html_title = "snapsy"
+html_title = "statescale"
 
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
@@ -121,31 +121,31 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "Discussions",
-            "url": "https://github.com/adtzlr/snapsy/discussions",
+            "url": "https://github.com/adtzlr/statescale/discussions",
             "icon": "fa-solid fa-comment",
             "type": "fontawesome",
         },
         {
             "name": "GitHub",
-            "url": "https://github.com/adtzlr/snapsy",
+            "url": "https://github.com/adtzlr/statescale",
             "icon": "fa-brands fa-github",
             "type": "fontawesome",
         },
         {
             "name": "Read the Docs",
-            "url": "https://readthedocs.org/projects/snapsy",
+            "url": "https://readthedocs.org/projects/statescale",
             "icon": "fa-solid fa-book",
             "type": "fontawesome",
         },
         {
             "name": "PyPI",
-            "url": "https://pypi.org/project/snapsy/",
+            "url": "https://pypi.org/project/statescale/",
             "icon": "fa-solid fa-box",
             "type": "fontawesome",
         },
     ],
     "logo": {
-        "text": "snapsy",
+        "text": "statescale",
         "image_light": "_static/logo_without_text.svg",
         "image_dark": "_static/logo_without_text.svg",
     },
@@ -154,7 +154,7 @@ html_theme_options = {
 
 html_context = {
     "github_user": "adtzlr",
-    "github_repo": "snapsy",
+    "github_repo": "statescale",
     "github_version": "main",
     "doc_path": "docs/",
 }
