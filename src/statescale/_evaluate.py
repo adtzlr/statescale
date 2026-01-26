@@ -48,7 +48,7 @@ def evaluate_data(
     if method == "griddata":
         from scipy.interpolate import griddata
 
-        def interp(points, values, xi, **kwargs):
+        def upscale(points, values, xi, **kwargs):
 
             # griddata requires points and xi as 1d array for dim=1
             if len(points.shape) == 2 and points.shape[1] == 1:
@@ -62,7 +62,7 @@ def evaluate_data(
     elif method == "rbf":
         from scipy.interpolate import RBFInterpolator
 
-        def interp(points, values, xi, **kwargs):
+        def upscale(points, values, xi, **kwargs):
 
             # RBFInterpolator requires points and xi as 2d array, also for dim=1
             if len(points.shape) == 1:
@@ -82,7 +82,7 @@ def evaluate_data(
             snapshots=snapshots,
             values=values,
             xi=xi,
-            interp=interp,
+            upscale=upscale,
             kernel_parameters=kernel_data.get(label),
             indices=indices,
             axis=axis,
