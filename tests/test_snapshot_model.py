@@ -31,7 +31,7 @@ def test_snapshot_model():
 
 def test_snapshot_model_list():
 
-    snapshots = np.linspace(0, 1, num=3).reshape(-1, 1)  # 3 snapshots, 1 parameter
+    snapshots = np.linspace(0, 1, num=3)  # 3 snapshots, 1 parameter
     point_data = [
         {"displacement": np.random.rand(6, 2)},  # 1. snapshot, 6 points, 2 dim
         {"displacement": np.random.rand(6, 2)},  # 2. snapshot, 6 points, 2 dim
@@ -52,10 +52,10 @@ def test_snapshot_model_list():
         kernel="surrogate",
     )
 
-    signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
+    signal = np.linspace(0, 1, num=20)  # 20 items, 1 parameter
 
     # `point_data`, `cell_data` and `field_data` for step 5 of the signal.
-    res_5 = model.evaluate(signal)[5]
+    res_5 = model.evaluate(signal, method="rbf")[5]
 
     res_5_mean = res_5.apply(np.mean, on_point_data=False, on_cell_data=True)(axis=0)
 
