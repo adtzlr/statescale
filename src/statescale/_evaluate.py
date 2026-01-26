@@ -5,8 +5,8 @@ def evaluate_data(
     snapshots,
     data,
     xi,
-    use_surrogate,
-    surrogate,
+    kernel_evaluate,
+    kernel_data,
     indices=None,
     axis=None,
     method="griddata",
@@ -26,8 +26,8 @@ def evaluate_data(
         Points at which to interpolate data.
     use_surrogate : bool
         Use a surrogate model for interpolation.
-    surrogate : SGParameters
-        Surrogate model parameters.
+    kernel : SurrogateKernel or GriddataKernel
+        The kernel to be used for evaluation.
     indices : array_like or None, optional
         The indices of the values to extract. Also allow scalars for indices.
         Default is None.
@@ -44,8 +44,6 @@ def evaluate_data(
     dict
         A dict with the interpolated data.
     """
-
-    out = dict()
 
     if method == "griddata":
         from scipy.interpolate import griddata
@@ -77,34 +75,18 @@ def evaluate_data(
     else:
         raise ValueError("Method not supported.")
 
-    if use_surrogate:
+    out = dict()
 
-        for label, values in data.items():
-
-            alpha = interp(
-                points=snapshots,
-                values=surrogate[label].alpha,
-                xi=xi,
-                **kwargs,
-            )
-
-            means_taken = surrogate[label].means
-            U_taken = surrogate[label].U.T.reshape(-1, *values.shape[1:])
-
-            if indices is not None:
-                U_taken = U_taken.take(indices=indices, axis=axis, **kwargs)
-                means_taken = means_taken.take(indices=indices, axis=axis, **kwargs)
-
-            centered_taken = np.einsum("am,m...->a...", alpha, U_taken)
-            out[label] = means_taken + centered_taken
-
-    else:
-        for label, values in data.items():
-            values_taken = values
-
-            if indices is not None:
-                values_taken = values_taken.take(indices=indices, axis=axis, **kwargs)
-
-            out[label] = interp(snapshots, values_taken, xi)
+    for label, values in data.items():
+        out[label] = kernel_evaluate(
+            snapshots=snapshots,
+            values=values,
+            xi=xi,
+            interp=interp,
+            kernel_parameters=kernel_data.get(label),
+            indices=indices,
+            axis=axis,
+            **kwargs,
+        )
 
     return out

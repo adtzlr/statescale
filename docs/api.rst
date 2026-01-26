@@ -9,6 +9,8 @@ API Reference
 
    SnapshotModel
    ModelResult
+   kernels.SurrogateKernel
+   kernels.GriddataKernel
 
 
 **Detailed API Reference**
@@ -19,6 +21,16 @@ API Reference
    :inherited-members:
 
 .. autoclass:: statescale.ModelResult
+   :members:
+   :undoc-members:
+   :inherited-members:
+
+.. autoclass:: statescale.kernels.SurrogateKernel
+   :members:
+   :undoc-members:
+   :inherited-members:
+
+.. autoclass:: statescale.kernels.GriddataKernel
    :members:
    :undoc-members:
    :inherited-members:

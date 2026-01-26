@@ -5,16 +5,6 @@ import numpy as np
 
 
 @dataclass
-class SurrogateParameters:
-    "Surrogate model parameters."
-
-    means: np.array
-    U: np.array
-    alpha: np.array
-    modes: int
-
-
-@dataclass
 class ModelResult:
     "Snapshot model result data."
 
@@ -49,37 +39,53 @@ class ModelResult:
             field_data=self.field_data,
         )
 
-    def as_mesh(self, points=None, cells=None, cell_type=None, mesh=None):
-        """Return a PyVista unstructured grid mesh with the model result data.
+    def as_view(self, mesh=None, field=None, inplace=False, update=None, **kwargs):
+        """Return a view on a given :class:`felupe.Mesh` or
+        :class:`felupe.FieldContainer` with added point- and cell-data.
 
         Parameters
         ----------
-        points : np.ndarray, optional
-            The points of the mesh. Required if no mesh is provided. Default is None.
-        cells : np.ndarray, optional
-            The cells of the mesh. Required if no mesh is provided. Default is None.
-        cell_type : str, optional
-            The cell type of the mesh. Required if no mesh is provided. Default is None.
         mesh : felupe.Mesh or None, optional
-            An existing mesh to attach the model result data to. Default is None.
+            A mesh which is used to apply the data. Default is None.
+        field : felupe.FieldContainer or None, optional
+            A field container which is used to apply the data. Default is None.
+        inplace : bool, optional
+            A flag to modify the given field inplace. Default is False.
+        update : str or None, optional
+            The key of the point data to be used for updating the values of the first
+            field. If None, the field values are not updated. Default is None.
+        **kwargs : dict, optional
+            Additional arguments are passed to :meth:`felupe.FieldContainer.view`.
 
         Returns
         -------
-        mesh_with_data : pyvista.UnstructuredGrid
-            The mesh with the model result data attached.
+        view : felupe.ViewMesh or felupe.ViewField
+            A view on the mesh or field with the model result data. The
+            :class:`pyvista. UnstructuredGrid` is available via
+            :attr:`felupe.ViewMesh.mesh` or :attr:`felupe.ViewField.mesh`.
 
         """
         import felupe
 
-        if mesh is None:
-            mesh = felupe.Mesh(
-                points=points,
-                cells=cells,
-                cell_type=cell_type,
-            )
+        if field is not None and mesh is None:
+            if not inplace:
+                field = field.copy()
 
-        view = mesh.view(point_data=self.point_data, cell_data=self.cell_data)
-        return view.mesh
+            if update is not None:
+                values = self.point_data.get(update)
+
+                if values is not None:
+                    field[0].values[:] = values
+
+            out = field
+
+        elif mesh is not None and field is None:
+            out = mesh
+
+        else:
+            raise ValueError("Either 'mesh' or 'field' must be provided.")
+
+        return out.view(point_data=self.point_data, cell_data=self.cell_data, **kwargs)
 
     def mean(self, *args, **kwargs):
         "Compute the arithmetic :func:`~numpy.mean` along the specified axis."
