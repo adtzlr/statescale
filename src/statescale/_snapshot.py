@@ -1,8 +1,8 @@
 import numpy as np
 
-from .evaluate import evaluate_data
-from .models import ModelResult
-from .surrogate import fit_surrogate_parameters
+from ._evaluate import evaluate_data
+from ._containers import ModelResult
+from .kernels import SurrogateKernel, GriddataKernel
 
 
 class SnapshotModel:
@@ -24,15 +24,9 @@ class SnapshotModel:
         a single snapshot.
     field_data : dict or None, optional
         A dict of time-independent field data.
-    use_surrogate : bool, optional
-        Use a surrogate model for interpolation. Default is False.
-    modes : 2-tuple of int or None, optional
-        Mode-range for the surrogate model. Default is (2, 10). If None, the modes are
-        chosen in such a way that cumsum(S) / S >= threshold of the singular values are
-        included. Only considered if use_surrogate is True.
-    threshold : float, optional
-        Default threshold to evaluate the number of modes for the surrogate model. Only
-        considered if use_surrogate is True. Default is 0.995.
+    kernel : str, optional
+        The kernel to be used for interpolation. Either ``"surrogate"`` or
+        ``"griddata"``. Default is ``"griddata"``.
 
     Notes
     -----
@@ -110,7 +104,7 @@ class SnapshotModel:
                 point_data=point_data,
                 cell_data=cell_data,
                 field_data=field_data,
-                # use_surrogate=False,  # use a POD surrogate model
+                # kernel="surrogate",  # use a POD surrogate model
                 # modes=(2, 10),  # min- and max no. of modes for surrogate model
             )
 
@@ -180,9 +174,8 @@ class SnapshotModel:
         point_data=None,
         cell_data=None,
         field_data=None,
-        use_surrogate=False,
-        modes=(2, 10),
-        threshold=0.995,
+        kernel="griddata",
+        **kwargs,
     ):
 
         if point_data is None:
@@ -202,17 +195,15 @@ class SnapshotModel:
         self.cell_data = cell_data
         self.field_data = field_data
 
-        self.use_surrogate = use_surrogate
-        self.surrogate = dict()
-        self.modes = modes
-        self.threshold = threshold
-
-        if self.use_surrogate:
-            self.surrogate = self._fit_surrogate(self.point_data, self.cell_data)
-        else:
-            self.surrogate = ModelResult(
-                point_data=None, cell_data=None, field_data=self.field_data
-            )
+        Kernel = {
+            "surrogate": SurrogateKernel,
+            "griddata": GriddataKernel,
+        }[kernel]
+        self.kernel = Kernel(
+            point_data=self.point_data,
+            cell_data=self.cell_data,
+            **kwargs,
+        )
 
     @staticmethod
     def from_list(data):
@@ -288,10 +279,10 @@ class SnapshotModel:
             snapshots=self.snapshots,
             data=self.point_data,
             xi=xi,
-            use_surrogate=self.use_surrogate,
-            surrogate=self.surrogate.point_data,
             indices=indices,
             axis=axis,
+            kernel_evaluate=self.kernel.evaluate,
+            kernel_data=self.kernel.kernel_data.point_data,
             method=method,
             **kwargs,
         )
@@ -331,32 +322,14 @@ class SnapshotModel:
             snapshots=self.snapshots,
             data=self.cell_data,
             xi=xi,
-            use_surrogate=self.use_surrogate,
-            surrogate=self.surrogate.cell_data,
             indices=indices,
             axis=axis,
+            kernel_evaluate=self.kernel.evaluate,
+            kernel_data=self.kernel.kernel_data.cell_data,
             method=method,
             **kwargs,
         )
 
         return ModelResult(
             point_data={}, cell_data=cell_data, field_data=self.field_data
-        )
-
-    def _fit_surrogate(self, point_data, cell_data, **kwargs):
-
-        return ModelResult(
-            point_data=fit_surrogate_parameters(
-                data=point_data,
-                modes=self.modes,
-                threshold=self.threshold,
-                **kwargs,
-            ),
-            cell_data=fit_surrogate_parameters(
-                data=cell_data,
-                modes=self.modes,
-                threshold=self.threshold,
-                **kwargs,
-            ),
-            field_data=self.field_data,
         )
