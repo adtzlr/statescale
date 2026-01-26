@@ -106,14 +106,14 @@ class SurrogateKernel:
         snapshots,
         values,
         xi,
-        interp,
+        upscale,
         kernel_parameters,
         indices=None,
         axis=None,
         **kwargs,
     ):
 
-        alpha = interp(
+        alpha = upscale(
             points=snapshots,
             values=kernel_parameters.alpha,
             xi=xi,
