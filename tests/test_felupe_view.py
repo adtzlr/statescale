@@ -46,7 +46,10 @@ def test_felupe_view():
     # can be converted to a list and supports iteration.
     signal = fem.math.linsteps([0, 1], num=500)
 
-    out = model.evaluate(signal)
+    model.save_kernel("kernel.npz")
+    m = statescale.SnapshotModel.load_kernel("kernel.npz")
+
+    out = m.evaluate(signal)
     data = out[-5]
 
     # The results are used to plot the deformed FEM model along with a chosen cell-data.
