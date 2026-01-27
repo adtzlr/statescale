@@ -76,14 +76,14 @@ model = statescale.SnapshotModel(
     point_data=point_data,
     cell_data=cell_data,
     field_data=field_data,
-    # use_surrogate=False,  # use a POD surrogate model
+    # kernel="surrogate",  # use a POD "surrogate" model or simple "griddata"
     # modes=(2, 10),  # min- and max no. of modes for surrogate model
 )
 
 signal = np.linspace(0, 1, num=20).reshape(-1, 1)  # 20 items, 1 parameter
 
 # a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
-res = model.evaluate(signal)
+res = model.evaluate(signal, method="griddata")  # method "griddata" or "rbf"
 ```
 
 ### List-based input data
