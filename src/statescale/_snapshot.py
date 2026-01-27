@@ -59,8 +59,6 @@ class SnapshotModel:
           - s-th snapshot
         * - ``i``
           - i-th vector component of snapshot / signal
-        * - ``m``
-          - m-th mode of surrogate model
         * - ``a``
           - a-th (time-) step of signal
         * - ``...``
