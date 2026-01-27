@@ -133,7 +133,7 @@ class SurrogateKernel:
 
     ..  math::
 
-        d_{aj} = \beta_{am} U_{mj}
+        d_{aj} = \beta_{am}\ U_{mj}
 
     Finally, the kernel parameters are stored in
     :class:`~statescale.kernels.SurrogateKernelParameters` for later use in the
