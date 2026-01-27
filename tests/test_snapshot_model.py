@@ -27,11 +27,11 @@ def test_snapshot_model():
     # a `ModelResult` object with `point_data`, `cell_data` and `field_data`.
     res = model.evaluate(signal, indices=[0, 1, 2], axis=1)
 
-    model.save_model("model.npy")
-    m1 = model.load_model("model.npy")
+    model.save_model("model.npz")
+    m1 = model.load_model("model.npz")
 
-    model.save_kernel("kernel.npy")
-    m2 = model.load_kernel("kernel.npy")
+    model.save_kernel("kernel.npz")
+    m2 = model.load_kernel("kernel.npz")
 
 
 def test_snapshot_model_list():
