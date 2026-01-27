@@ -1,8 +1,7 @@
 r"""
 FEM result interpolation
 ------------------------
-First, let's create and run a simple FEM model with FElupe. A record-function collects
-the point- and cell-data dicts at the snapshots.
+This example shows how to run a simple FEM model with FElupe. A record-function collects the point- and cell-data dicts at the snapshots.
 """
 
 import felupe as fem
@@ -48,7 +47,8 @@ model = statescale.SnapshotModel(
 )
 
 # %%
-# A signal will be used to interpolate (evaluate) the point and cell data.
+# A signal will be used to interpolate (evaluate) the point and cell data
+import numpy as np
 import matplotlib.pyplot as plt
 
 time = fem.math.linsteps([0, 1], num=200) * 2 * np.pi
