@@ -48,19 +48,28 @@ model = statescale.SnapshotModel(
 )
 
 # %%
-# A signal will be used to interpolate (evaluate) the point and cell data. The result
-# can be converted to a list and supports iteration.
-signal = fem.math.linsteps([0, 1], num=500)
+# A signal will be used to interpolate (evaluate) the point and cell data.
+import matplotlib.pyplot as plt
 
-out = model.evaluate(signal)
-data = out[-5]
+time = fem.math.linsteps([0, 1], num=200) * 2 * np.pi
+signal = 0.5 + np.sin(time) / 2
+
+plt.plot(time, signal)
+plt.plot(time[30], signal[30], "C0o", ms=10, label="selected step")
+plt.xlabel("Time in s")
+plt.ylabel("External displacement in mm")
+plt.legend()
 
 # %%
-# The results are used to plot the deformed FEM model along with a chosen cell-data.
-# Basic math, like transpose, can be applied to the model result. Any custom math-
-# function can also be applied on the arrays of the dicts by
-# :meth:`~statescale.ModelResult.apply`.
+# The results are used to plot the deformed FEM model along with a chosen cell-data at
+# step 30. Basic math, like transpose, can be applied to the model result. Any custom
+# math-function can also be applied on the arrays of the dicts by
+# :meth:`~statescale.ModelResult.apply`. The model result can be converted to a list and
+# supports iteration.
 import numpy as np
+
+out = model.evaluate(signal)
+data = out[30]
 
 data = data.apply(np.mean, on_point_data=False)(axis=-2)
 data = data.apply(np.transpose, on_point_data=False)()
