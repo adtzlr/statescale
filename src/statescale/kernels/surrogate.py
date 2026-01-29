@@ -143,6 +143,7 @@ class SurrogateKernel:
     --------
     statescale.SnapshotModel : A model with point-, cell- and field-data at snapshots
         and with methods to interpolate the data at points of interest.
+    statescale.kernels.GriddataKernel : A griddata kernel.
 
     References
     ----------
