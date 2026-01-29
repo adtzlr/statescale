@@ -172,10 +172,10 @@ class SnapshotModel:
             field_data = dict()
 
         if isinstance(point_data, list):
-            point_data = self.from_list(point_data)
+            point_data = self._from_list(point_data)
 
         if isinstance(cell_data, list):
-            cell_data = self.from_list(cell_data)
+            cell_data = self._from_list(cell_data)
 
         self.snapshots = snapshots
         self.point_data = point_data
@@ -195,7 +195,9 @@ class SnapshotModel:
         )
 
     @staticmethod
-    def from_list(data):
+    def _from_list(data):
+        "Return a data dict from given per-snapshot list of data dicts."
+
         new_data = {}
         for label in data[0].keys():
             list_of_data = []
@@ -205,22 +207,30 @@ class SnapshotModel:
         return new_data
 
     def save_model(self, filename="model.npz"):
+        "Save the model to a file."
+
         np.savez(filename, model=self)
 
     def save_kernel(self, filename="kernel.npz"):
+        "Save the kernel to a file."
         np.savez(filename, kernel=self.kernel)
 
     @classmethod
     def load_model(cls, filename):
+        "Return a model, loaded from a file."
         return np.load(filename, allow_pickle=True)["model"].item()
 
     @classmethod
     def load_kernel(cls, filename):
+        "Return a model with the loaded kernel file."
+
         kernel = np.load(filename, allow_pickle=True)["kernel"].item()
         return cls.from_kernel(kernel)
 
     @classmethod
     def from_kernel(cls, kernel):
+        "Return a model with the loaded kernel."
+
         model = cls(
             snapshots=np.zeros(0),
             point_data=None,
@@ -325,7 +335,7 @@ class SnapshotModel:
 
         Returns
         -------
-        statescale.ModelResult
+        ModelResult
             The model result with attributes for time-dependent (empty) ``point_data``,
             ``cell_data`` and time-independent ``field_data``.
         """
