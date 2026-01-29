@@ -214,7 +214,7 @@ class SurrogateKernel:
 
             out[label] = SurrogateKernelParameters(
                 points=snapshots,
-                U=U,
+                U=np.ascontiguousarray(U.T.reshape(-1, *values.shape[1:])).T,
                 alpha=alpha,
                 alpha_mean=alpha_mean,
                 modes=modes_used,
@@ -240,7 +240,7 @@ class SurrogateKernel:
             **kwargs,
         )
 
-        U_taken = kernel_parameters.U.T.reshape(-1, *kernel_parameters.shape)
+        U_taken = kernel_parameters.U.T
 
         if indices is not None:
             U_taken = U_taken.take(indices=indices, axis=axis)
