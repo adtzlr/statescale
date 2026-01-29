@@ -33,6 +33,8 @@ class ModelResult:
 
     @property
     def T(self):
+        "Return a model result with the data transposed."
+
         return ModelResult(
             point_data={k: v.T for k, v in self.point_data.items()},
             cell_data={k: v.T for k, v in self.cell_data.items()},
