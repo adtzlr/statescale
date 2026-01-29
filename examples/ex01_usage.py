@@ -47,7 +47,7 @@ model = statescale.SnapshotModel(
 )
 
 # %%
-# A signal will be used to interpolate (evaluate) the point and cell data
+# A signal will be used to interpolate (evaluate) the point and cell data.
 import numpy as np
 import matplotlib.pyplot as plt
 
