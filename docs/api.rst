@@ -7,5 +7,5 @@ API Reference
    :maxdepth: 1
    :caption: statescale namespace:
    
-   model
-   kernels
+   api/model
+   api/kernels
