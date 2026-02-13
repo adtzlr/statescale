@@ -10,7 +10,7 @@ mesh = fem.Rectangle(n=6)
 region = fem.RegionQuad(mesh)
 field = fem.FieldContainer([fem.FieldPlaneStrain(region, dim=2)])
 
-boundaries = fem.dof.uniaxial(field, clamped=True)
+boundaries = fem.dof.uniaxial(field, clamped=True, return_loadcase=False)
 solid = fem.SolidBody(umat=fem.NeoHooke(mu=1, bulk=2), field=field)
 
 if int(fem.__version__.split(".")[0]) < 10:
