@@ -53,11 +53,10 @@ def test_felupe_view():
     data = out[-5]
 
     # The results are used to plot the deformed FEM model along with a chosen cell-data.
-    # Basic math, like transpose, can be applied to the model result. Any custom math-
-    # function can also be applied on the arrays of the dicts by
+    # Any custom math-function can also be applied on the arrays of the dicts by
     # :meth:`~statescale.ModelResult.apply`.
-    data = data.apply(np.mean, on_point_data=False)(axis=-2)
-    data = data.apply(np.transpose, on_point_data=False)()
+    data = data.apply(np.mean, on_cell_data=True)(axis=-2)
+    data = data.apply(np.transpose, on_cell_data=True)()
 
     view = data.as_view(field=field, inplace=True, update="u")
     view.mesh  # PyVista UnstructuredGrid
