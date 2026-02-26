@@ -71,8 +71,8 @@ import numpy as np
 out = model.evaluate(signal)
 data = out[30]
 
-data = data.apply(np.mean, on_point_data=False)(axis=-2)
-data = data.apply(np.transpose, on_point_data=False)()
+data = data.apply(np.mean, on_cell_data=True)(axis=-2)
+data = data.apply(np.transpose, on_cell_data=True)()
 
 view = data.as_view(field=field, inplace=True, update="u")
 view.mesh  # PyVista UnstructuredGrid

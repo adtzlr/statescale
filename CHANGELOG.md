@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-02-26
+
+### Changed
+- Change default behavior for math-functions to be applied on point-, cell- and field-data to `ModelResult.apply(np.mean, on_point_data=False, on_cell_data=False, on_field_data=False)`.
+
+### Removed
+- Remove `ModelResult.mean()`, use `ModelResult.apply(np.mean)` instead.
+
 ## [0.2.2] - 2026-01-27
 
 ### Fixed

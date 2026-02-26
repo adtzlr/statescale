@@ -89,11 +89,7 @@ class ModelResult:
 
         return out.view(point_data=self.point_data, cell_data=self.cell_data, **kwargs)
 
-    def mean(self, *args, **kwargs):
-        "Compute the arithmetic :func:`~numpy.mean` along the specified axis."
-        return self.apply(np.mean)(*args, **kwargs)
-
-    def apply(self, func, on_point_data=True, on_cell_data=True, on_field_data=False):
+    def apply(self, func, on_point_data=False, on_cell_data=False, on_field_data=False):
         """Apply any function to the arrays of all or selected data dicts.
 
         Parameters
@@ -101,9 +97,9 @@ class ModelResult:
         func : callable
             The function to be applied.
         on_point_data : bool, optional
-            A flag to apply the function on the point data. Default is True.
+            A flag to apply the function on the point data. Default is False.
         on_cell_data : bool, optional
-            A flag to apply the function on the cell data. Default is True.
+            A flag to apply the function on the cell data. Default is False.
         on_field_data : bool, optional
             A flag to apply the function on the field data. Default is False.
 
@@ -132,7 +128,7 @@ class ModelResult:
             >>> import statescale
             >>>
             >>> res = statescale.Modelresult(point_data={"u": np.random.rand(25, 100, 8, 3)})
-            >>> out = res.apply(np.mean)(axis=-2)
+            >>> out = res.apply(np.mean, on_point_data=True)(axis=-2)
             >>>
             >>> out.point_data["u"].shape
             (25, 100, 3)

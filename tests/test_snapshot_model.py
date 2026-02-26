@@ -77,9 +77,6 @@ def test_snapshot_model_list():
     res_5_mean = res_5.apply(np.mean, on_point_data=True, on_cell_data=True)(axis=0)
     assert res_5_mean.cell_data["strain"].shape == (2, 2)
 
-    res_5_mean_2 = res_5.mean(axis=0)
-    assert res_5_mean_2.cell_data["strain"].shape == (2, 2)
-
     model.save_model("model.npz")
     m1 = model.load_model("model.npz")
 
